@@ -3,17 +3,24 @@
   <head>
     <title>bfcache Sandbox</title>
     <meta charset="UTF-8" />
+    <script src="./ui-toggle.js"></script>
   </head>
 
   <body>
-    <div id="app">
+    <div>
       <h3>Test bfcache pageshow / pagehide UI freze</h3>
 	  <p><a href="https://web.dev/bfcache/" target="_blank">web.dev bfcache</a></p>
       <ul>
-        <li><a href="https://www.google.com/">Google - self</a></li>
         <li><a href="./page1.html">Page 1</a></li>
+        <li><a href="./page2.html">Page 2</a></li>
+		<li><a href="https://www.google.com/">Google - self</a></li>
       </ul>
     </div>
+
+    <fieldset id="setInterval">
+      <legend>UI state toggle via setInterval</legend>
+      <textarea rows="1"></textarea>
+    </fieldset>
 
     <script>
       function appendMsg(msg) {
@@ -21,23 +28,26 @@
         div.textContent = msg;
         document.body.prepend(div);
       }
+	  
       window.addEventListener("pageshow", (event) => {
         if (event.persisted) {
-          appendMsg("This page was restored from the bfcache.");
+          appendMsg("[pageshow] This page was restored from the bfcache.");
         } else {
-          appendMsg("This page was loaded normally.");
+          appendMsg("[pageshow] This page was loaded normally.");
         }
       });
 
       window.addEventListener("pagehide", (event) => {
         if (event.persisted) {
-          appendMsg("This page *might* be entering the bfcache.");
+          appendMsg("[pagehide] This page *might* be entering the bfcache.");
         } else {
-          appendMsg("This page will unload normally and be discarded.");
+          appendMsg("[pagehide] This page will unload normally and be discarded.");
         }
       });
+		
       (function () {
         appendMsg("Js Start");
+        uiToggleTest && uiToggleTest.start('#setInterval textarea');
       })();
     </script>
   </body>
