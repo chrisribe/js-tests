@@ -10,7 +10,10 @@
       input,
       textarea {
         font-size: 18px;
-        width: 100%;
+      }
+      button {
+        margin: 0 0 1em;
+        height: 2.5em;
       }
     </style>
     <script src="./ui-toggle.js"></script>
@@ -29,6 +32,10 @@
 
     <fieldset id="setIntervalTest">
       <legend>UI state toggle via setInterval</legend>
+      <div>
+        <button onclick="uiToggleTest.start('#setIntervalTest textarea')">Start test</button>
+        <button onclick="uiToggleTest.stop()">Stop test</button>
+      </div>
       <textarea rows="1"></textarea>
     </fieldset>
 
@@ -57,7 +64,6 @@
 		
       (function () {
         appendMsg("Js Start");
-        uiToggleTest && uiToggleTest.start('#setIntervalTest textarea');
       })();
     </script>
   </body>
