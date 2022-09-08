@@ -61,9 +61,36 @@
           appendMsg("[pagehide] This page will unload normally and be discarded.");
         }
       });
+
+      function abortActions(){
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+//        const url = "https://baconipsum.com/api/?type=all-meat&sentences=1&start-with-lorem=1";
+        const url = "https://app.requestly.io/delay/4000/https://baconipsum.com/api/?type=all-meat&sentences=1&start-with-lorem=1";
+
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            //callback(xhr.response);
+            console.log("RESP", xhr.responseText);
+            var el = document.querySelector('#setIntervalTest textarea');
+            if(el) {
+              el.setAttribute('disabled', 'true');
+            } else {
+              console.log('no el');
+            }
+          }
+        }        
+        xhr.open(method, url, true);
+        xhr.send();
+
+        // if (OH_NOES_WE_NEED_TO_CANCEL_RIGHT_NOW_OR_ELSE) {
+        //   xhr.abort();
+        // }        
+      }
 		
       (function () {
         appendMsg("Js Start");
+        abortActions();
       })();
     </script>
   </body>
