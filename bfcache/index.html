@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>bfcache Sandbox</title>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>bfcache Sandbox</title>
+    <style>
+      input,
+      textarea {
+        font-size: 18px;
+        width: 100%;
+      }
+    </style>
     <script src="./ui-toggle.js"></script>
   </head>
 
@@ -13,11 +23,11 @@
       <ul>
         <li><a href="./page1.html">Page 1</a></li>
         <li><a href="./page2.html">Page 2</a></li>
-		<li><a href="https://www.google.com/">Google - self</a></li>
+		    <li><a href="https://www.google.com/">Google - self</a></li>
       </ul>
     </div>
 
-    <fieldset id="setInterval">
+    <fieldset id="setIntervalTest">
       <legend>UI state toggle via setInterval</legend>
       <textarea rows="1"></textarea>
     </fieldset>
@@ -47,7 +57,7 @@
 		
       (function () {
         appendMsg("Js Start");
-        uiToggleTest && uiToggleTest.start('#setInterval textarea');
+        uiToggleTest && uiToggleTest.start('#setIntervalTest textarea');
       })();
     </script>
   </body>
