@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bfcache Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <div id="app">
+      <h3>Test bfcache pageshow / pagehide UI freze</h3>
+	  <p><a href="https://web.dev/bfcache/" target="_blank">web.dev bfcache</a></p>
+      <ul>
+        <li><a href="https://www.google.com/">Google - self</a></li>
+        <li><a href="/page1.html">Page 1</a></li>
+      </ul>
+    </div>
+
+    <script>
+      function appendMsg(msg) {
+        var div = document.createElement("div");
+        div.textContent = msg;
+        document.body.prepend(div);
+      }
+      window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+          appendMsg("This page was restored from the bfcache.");
+        } else {
+          appendMsg("This page was loaded normally.");
+        }
+      });
+
+      window.addEventListener("pagehide", (event) => {
+        if (event.persisted) {
+          appendMsg("This page *might* be entering the bfcache.");
+        } else {
+          appendMsg("This page will unload normally and be discarded.");
+        }
+      });
+      (function () {
+        appendMsg("Js Start");
+      })();
+    </script>
+  </body>
+</html>
