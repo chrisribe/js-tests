@@ -9,10 +9,11 @@
     <style>
       input,
       textarea {
-        font-size: 18px;
+        font-size: 14px;
+        margin: 0.5em 0;
       }
       button {
-        margin: 0 0 1em;
+        margin: 0.5em 0;
         height: 2.5em;
       }
     </style>
@@ -33,11 +34,23 @@
     <fieldset id="setIntervalTest">
       <legend>UI state toggle via setInterval</legend>
       <div>
-        <button onclick="uiToggleTest.start('#setIntervalTest textarea')">Start test</button>
-        <button onclick="uiToggleTest.stop()">Stop test</button>
+        <button onclick="uiToggleDisable.startIntervalTest('#setIntervalTest textarea')">Start test</button>
+        <button onclick="uiToggleDisable.stop()">Stop test</button>
       </div>
       <textarea rows="1"></textarea>
     </fieldset>
+
+    <fieldset id="networkDelayTest">
+      <legend>UI state toggle after network delay</legend>
+      <div>
+        <div><label for="delayMs">Network delay time Ms</label></div>
+        <div><input id="delayMs" type="text" value="4000"></div>
+        <button onclick="startNetworkTest();">Start test</button>
+        <button onclick="uiToggleDisable.stop()">Stop test</button>
+      </div>
+      <textarea rows="1"></textarea>
+    </fieldset>
+
 
     <script>
       function appendMsg(msg) {
@@ -62,34 +75,16 @@
         }
       });
 
-      function abortActions(){
-        const xhr = new XMLHttpRequest();
-        const method = "GET";
-        const url = "https://deelay.me/4000/https://baconipsum.com/api/?type=all-meat&sentences=1&start-with-lorem=1";
-
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState === 4) {
-            //callback(xhr.response);
-            console.log("RESP", xhr.responseText);
-            var el = document.querySelector('#setIntervalTest textarea');
-            if(el) {
-              el.setAttribute('disabled', 'true');
-            } else {
-              console.log('no el');
-            }
-          }
-        }        
-        xhr.open(method, url, true);
-        xhr.send();
-
-        // if (OH_NOES_WE_NEED_TO_CANCEL_RIGHT_NOW_OR_ELSE) {
-        //   xhr.abort();
-        // }        
+      function startNetworkTest(){
+        var delayMs = document.getElementById("delayMs").value;
+        uiToggleDisable.startNetworkDelayedTest(
+          '#networkDelayTest textarea',
+          delayMs
+        );
       }
-		
+
       (function () {
         appendMsg("Js Start");
-        abortActions();
       })();
     </script>
   </body>
